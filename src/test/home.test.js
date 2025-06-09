@@ -12,7 +12,7 @@ import {
   bookSlot1,
   bookSlot2,
   bookSlot3,
-  bookSlot4
+  bookSlot4,
 } from "../Component/slot_data";
 
 configure({ adapter: new Adapter() });
@@ -27,14 +27,14 @@ describe("Home component", () => {
   let component;
   afterEach(() => {
     jest.clearAllMocks();
-  })
+  });
   beforeEach(() => {
     const Games1 = [
       { id: 0, src: BasketBall, name: "BasketBall", slots: bookSlot1 },
       { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
       { id: 2, src: cricket, name: "Cricket", slots: bookSlot3 },
-      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 }
-    ]
+      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 },
+    ];
     component = shallow(
       <Games
         Games={Games1}
@@ -43,33 +43,28 @@ describe("Home component", () => {
         history={historyMock}
         postDate={mockfn2}
       />
-    )
-
+    );
   });
   it("DidMount", () => {
     expect(mockfn1).toHaveBeenCalledTimes(1);
     expect(mockfn2).toHaveBeenCalledTimes(1);
-  })
+  });
   it("play zone content", () => {
     expect(component.find("header").length).toBe(1);
     expect(component.find("header").text()).toEqual("Play Zone ");
     expect(component.find(".Card").length).toBe(4);
-    const align = component
-      .find("center")
-      .at(1)
-      .find("div")
-      .find("button");
+    const align = component.find("center").at(1).find("div").find("button");
     expect(align.render().text()).toBe("Check your booking");
     expect(component.find("header").childAt(0).length).toBe(1);
   });
   it("card content", () => {
     const Cards = component.find(".Card");
-    const Product = Cards.find("ul").map(child => child.text());
+    const Product = Cards.find("ul").map((child) => child.text());
     expect(Product).toEqual([
       "BasketBallBook Now",
       "VolleyBallBook Now",
       "CricketBook Now",
-      "FootBallBook Now"
+      "FootBallBook Now",
     ]);
   });
   it("BookNow Click", () => {
@@ -86,13 +81,8 @@ describe("Home component", () => {
   });
   it("On Clicking Book Now", () => {
     const spy = jest.spyOn(component.instance(), "handleSearch");
-    const check_btn = component
-      .find("center")
-      .at(1)
-      .find("div")
-      .find("button");
+    const check_btn = component.find("center").at(1).find("div").find("button");
     check_btn.simulate("click");
     expect(spy).toHaveBeenCalled();
   });
 });
-

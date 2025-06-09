@@ -12,7 +12,7 @@ import {
   bookSlot1,
   bookSlot2,
   bookSlot3,
-  bookSlot4
+  bookSlot4,
 } from "../Component/slot_data";
 import DayPicker from "react-day-picker";
 
@@ -35,17 +35,17 @@ describe("Book page", () => {
       { id: 0, src: BasketBall, name: "BasketBall", slots: bookSlot1 },
       { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
       { id: 2, src: cricket, name: "Cricket", slots: bookSlot3 },
-      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 }
-    ]
+      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 },
+    ];
     const selectedGame1 = [
-      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 }
-    ]
+      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
+    ];
     const selectedDate1 = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate() + 1
-    )
-    const slotBooked1 = undefined
+    );
+    const slotBooked1 = undefined;
     component = shallow(
       <Booking
         game={Games1}
@@ -58,12 +58,16 @@ describe("Book page", () => {
         history={historyMock}
         doneBooking={mockfn1}
       />
-    )
-
+    );
   });
   it("Book Content", () => {
     const Date_display =
-      new Date().getDate() + 1 + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
+      new Date().getDate() +
+      1 +
+      "/" +
+      (new Date().getMonth() + 1) +
+      "/" +
+      new Date().getFullYear();
     expect(component.find("header").length).toBe(1);
     expect(component.find("header").childAt(0).length).toBe(1);
     expect(component.find("header").find("p").length).toBe(1);
@@ -72,10 +76,7 @@ describe("Book page", () => {
     );
     expect(component.find(".Card").length).toBe(1);
     expect(component.find("#book_button")).toBeTruthy();
-    component
-      .find("header")
-      .find("img")
-      .simulate("click");
+    component.find("header").find("img").simulate("click");
     expect(historyMock.push.mock.calls[0]).toEqual(["/"]);
     expect(component.find("#date").find(DayPicker).length).toBe(1);
   });
@@ -121,24 +122,41 @@ describe("Book page", () => {
       { id: 0, src: BasketBall, name: "BasketBall", slots: bookSlot1 },
       { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
       { id: 2, src: cricket, name: "Cricket", slots: bookSlot3 },
-      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 }
-    ]
-    const selectedGame2 =
-    {
-      id: 1, src: VolleyBall, name: "VolleyBall", slots: [
-        { id: 3, startTime: "11.00 A.M", endTime: "12.00 P.M", slotStatus: "btn btn-primary" },
-        { id: 4, startTime: "12.00 P.M", endTime: "01.00 P.M", slotStatus: "btn btn-success" }
-      ]
-    }
+      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 },
+    ];
+    const selectedGame2 = {
+      id: 1,
+      src: VolleyBall,
+      name: "VolleyBall",
+      slots: [
+        {
+          id: 3,
+          startTime: "11.00 A.M",
+          endTime: "12.00 P.M",
+          slotStatus: "btn btn-primary",
+        },
+        {
+          id: 4,
+          startTime: "12.00 P.M",
+          endTime: "01.00 P.M",
+          slotStatus: "btn btn-success",
+        },
+      ],
+    };
 
     const selectedDate2 = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate() + 1
-    )
+    );
     const slotBooked2 = [
-      { id: 3, startTime: "11.00 A.M", endTime: "12.00 P.M", slotStatus: "btn btn-success" }
-    ]
+      {
+        id: 3,
+        startTime: "11.00 A.M",
+        endTime: "12.00 P.M",
+        slotStatus: "btn btn-success",
+      },
+    ];
     const wrapper = shallow(
       <Booking
         game={Games2}
@@ -151,7 +169,7 @@ describe("Book page", () => {
         history={historyMock}
         doneBooking={mockfn1}
       />
-    )
+    );
 
     wrapper.find("#book_button").simulate("Click");
     expect(wrapper.state().errorStmt).toEqual("Invalid Input!!!");
@@ -199,17 +217,17 @@ describe("Book page", () => {
       { id: 0, src: BasketBall, name: "BasketBall", slots: bookSlot1 },
       { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
       { id: 2, src: cricket, name: "Cricket", slots: bookSlot3 },
-      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 }
-    ]
+      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 },
+    ];
     const selectedGame3 = [
-      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 }
-    ]
+      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
+    ];
     const selectedDate3 = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate() + 2
-    )
-    const slotBooked3 = undefined
+    );
+    const slotBooked3 = undefined;
     const wrapper = shallow(
       <Booking
         game={Games3}
@@ -221,7 +239,8 @@ describe("Book page", () => {
         iconClick={mockfn1}
         history={historyMock}
         doneBooking={mockfn1}
-      />)
+      />
+    );
     expect(wrapper.find("#not_opened").text()).toBe(
       "Booking is not opened yet"
     );
@@ -234,18 +253,24 @@ describe("Book page", () => {
       { id: 0, src: BasketBall, name: "BasketBall", slots: bookSlot1 },
       { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
       { id: 2, src: cricket, name: "Cricket", slots: bookSlot3 },
-      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 }
-    ]
+      { id: 3, src: FootBall, name: "FootBall", slots: bookSlot4 },
+    ];
     const selectedGame1 = [
-      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 }
-    ]
+      { id: 1, src: VolleyBall, name: "VolleyBall", slots: bookSlot2 },
+    ];
     const selectedDate1 = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
       new Date().getDate()
-    )
-    const slotBooked1 = undefined
-    const Date_display = new Date().getDate() + 1 + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
+    );
+    const slotBooked1 = undefined;
+    const Date_display =
+      new Date().getDate() +
+      1 +
+      "/" +
+      (new Date().getMonth() + 1) +
+      "/" +
+      new Date().getFullYear();
     const wrapper = shallow(
       <Booking
         game={Games1}
@@ -258,14 +283,11 @@ describe("Book page", () => {
         history={historyMock}
         doneBooking={mockfn1}
       />
-    )
+    );
 
-    expect(
-      wrapper
-        .find("#not_opened")
-        .render()
-        .text()
-    ).toBe("Booking has been closed. Book your slot for" + Date_display);
+    expect(wrapper.find("#not_opened").render().text()).toBe(
+      "Booking has been closed. Book your slot for" + Date_display
+    );
     expect(wrapper.find("Slots").length).toBe(0);
     expect(wrapper.find("#date").find(DayPicker).length).toBe(1);
     expect(wrapper.find("#book_button").length).toBe(0);

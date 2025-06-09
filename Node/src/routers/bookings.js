@@ -36,7 +36,7 @@ bookingsRouter.post("/book", async (req, res) => {
   try {
     const gameslot = await GameSlots.findOne({ date: req.body.slotDate });
     if (!gameslot) {
-      throw new Error();
+      throw new Error("No game slots available for this date");
     }
     const booking = new Bookings(req.body);
     const id = req.body.slot.id;
@@ -51,7 +51,7 @@ bookingsRouter.post("/book", async (req, res) => {
     }
     res.send("Slot unavailable");
   } catch (e) {
-    res.status(400).send();
+    res.status(400).send(e?.message || "Error booking slot");
   }
 });
 

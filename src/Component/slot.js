@@ -1,43 +1,49 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectSlot } from "../Action/action";
+import { selectGame, selectSlot } from "../Action/action";
 class Slots extends Component {
-  handleSlot = id => {
-    this.props.selectSlot(id);
+  handleSlot = (slot) => {
+    if (slot.slotStatus === "btn btn-danger") return;
+    this.props.selectSlot(slot.id);
   };
 
   render() {
-    // Template for each slot
-    // <div key={slot.id} className="slot_list">
-    //   <h4>
-    //     <span
-    //       className={slot.slotStatus}
-    //       style={{ cursor: "pointer" }}              
-    //     >
+    const { bookingSlot, selectedGame } = this.props;
+    // console.log("slot", slot, this.props);
 
-    //     </span>
-    //   </h4>
-    // </div>
-
-    return (<div>
-      {/* code for slot goes here */}
-    </div>);
+    return (
+      <div className="slot_list">
+        {selectedGame?.slots?.length > 0 &&
+          selectedGame?.slots.map((slot) => (
+            <h4 key={slot.id}>
+              <span
+                className={
+                  bookingSlot?.id === slot.id
+                    ? bookingSlot?.slotStatus
+                    : slot.slotStatus
+                }
+                style={{ cursor: "pointer" }}
+                onClick={() => this.handleSlot(slot)}
+              >
+                {slot.startTime} - {slot.endTime}
+              </span>
+            </h4>
+          ))}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     selectedGame: state.selectedGame,
-    bookingSlot: state.slotBooked
+    bookingSlot: state.slotBooked,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    selectSlot: id => dispatch(selectSlot(id))
+    selectSlot: (id) => dispatch(selectSlot(id)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Slots);
+export default connect(mapStateToProps, mapDispatchToProps)(Slots);
